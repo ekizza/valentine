@@ -835,29 +835,44 @@ function fallbackPhotoURL(folder, file){
     arrowPrev.addEventListener("click", (e)=>{ e.preventDefault(); e.stopPropagation(); prevStory(); });
     arrowNext.addEventListener("click", (e)=>{ e.preventDefault(); e.stopPropagation(); nextStory(); });
 
-    // Hold to pause (mouse + touch). Touch: prevent ghost clicks.
-    let suppressNextClickUntil = 0;
-    const isSuppressedClick = () => Date.now() < suppressNextClickUntil;
+    // Hold to pause (mobile-friendly): long-press anywhere on кадр (кроме кнопок) = пауза, отпустил = продолжили.
+    // Важно: НЕ блокируем default touch, иначе iOS "съедает" клики по кнопкам.
+    let pressTimer = null;
+    let pausedByHold = false;
 
-    frame.addEventListener("mousedown", ()=>{ if(stories.classList.contains("open")) pauseAuto(); });
-    window.addEventListener("mouseup", ()=>{ if(stories.classList.contains("open")) resumeAuto(); });
+    function isOnButton(el){
+      return !!(el && el.closest && el.closest("button"));
+    }
 
-    frame.addEventListener("touchstart", (e)=>{
-      e.preventDefault();
-      suppressNextClickUntil = Date.now() + 450;
-      if(stories.classList.contains("open")) pauseAuto();
-    }, { passive:false });
+    function startHold(e){
+      if(!stories.classList.contains("open")) return;
+      if(isOnButton(e.target)) return;
 
-    frame.addEventListener("touchend", (e)=>{
-      e.preventDefault();
-      suppressNextClickUntil = Date.now() + 450;
-      if(stories.classList.contains("open")) resumeAuto();
-    }, { passive:false });
+      // long-press threshold
+      pressTimer = setTimeout(() => {
+        pauseAuto();
+        pausedByHold = true;
+      }, 180);
+    }
 
-    window.addEventListener("click", (e)=>{
-      // safety: don't let delayed click do anything weird
-      if(isSuppressedClick()) e.stopPropagation();
-    }, true);
+    function endHold(){
+      if(pressTimer){ clearTimeout(pressTimer); pressTimer = null; }
+      if(!stories.classList.contains("open")) return;
+      if(pausedByHold){
+        pausedByHold = false;
+        resumeAuto();
+      }
+    }
+
+    // Pointer events (лучше всего), плюс touch fallback для старых Safari
+    frame.addEventListener("pointerdown", startHold);
+    frame.addEventListener("pointerup", endHold);
+    frame.addEventListener("pointercancel", endHold);
+    frame.addEventListener("pointerleave", endHold);
+
+    frame.addEventListener("touchstart", startHold, { passive:true });
+    frame.addEventListener("touchend", endHold, { passive:true });
+    frame.addEventListener("touchcancel", endHold, { passive:true });
 
     window.addEventListener("keydown", (e)=>{
       if(!stories.classList.contains("open")) return;
