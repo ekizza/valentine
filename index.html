@@ -1,0 +1,870 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Для тебя ❤️</title>
+  <meta name="theme-color" content="#fbf7ff" />
+  <meta name="description" content="Наша маленькая история — только для тебя." />
+
+  <style>
+    :root{
+      --bg1:#fbf7ff; --bg2:#fff5fa; --bg3:#f3fffb;
+      --glassA: rgba(255,255,255,.78);
+      --glassB: rgba(255,255,255,.58);
+      --stroke: rgba(40,30,70,.14);
+
+      --text: rgba(12,12,22,.92);
+      --muted: rgba(12,12,22,.70);
+      --muted2: rgba(12,12,22,.55);
+
+      --shadow: 0 22px 80px rgba(25,25,45,.16);
+      --r: 20px; --r2: 26px; --max: 1040px;
+    }
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(1200px 820px at 10% -10%, rgba(173,116,255,.22), transparent 58%),
+        radial-gradient(980px 760px at 92% 8%, rgba(255,99,148,.18), transparent 60%),
+        radial-gradient(980px 980px at 70% 112%, rgba(86,255,203,.16), transparent 56%),
+        linear-gradient(180deg, var(--bg1) 0%, var(--bg2) 48%, var(--bg3) 100%);
+      overflow-x:hidden;
+    }
+    body:before{
+      content:"";
+      position:fixed; inset:0;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.25'/%3E%3C/svg%3E");
+      opacity:.06;
+      pointer-events:none;
+      mix-blend-mode:overlay;
+    }
+
+    .wrap{ max-width: var(--max); margin:0 auto; padding: 22px 18px 44px; }
+    header{ padding: 10px 0 10px; position:relative; }
+
+    .hero{
+      margin-top: 14px;
+      display:grid;
+      grid-template-columns: 1.25fr .75fr;
+      gap: 16px;
+      align-items: stretch;
+    }
+    @media (max-width: 920px){ .hero{ grid-template-columns: 1fr; } }
+
+    .card{
+      background: linear-gradient(180deg, var(--glassA), var(--glassB));
+      border:1px solid var(--stroke);
+      border-radius: var(--r2);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+
+    .heroMain{ padding: 20px 18px; }
+    .heroSide{ padding: 16px; display:flex; flex-direction:column; gap: 12px; }
+
+    .badge{
+      display:inline-flex; align-items:center; gap:10px;
+      padding: 8px 12px; border-radius: 999px;
+      border:1px solid rgba(40,30,70,.16);
+      background: rgba(255,255,255,.62);
+      color: var(--muted);
+      font-size: 12px;
+      letter-spacing: .2px;
+    }
+    .dot{
+      width:8px; height:8px; border-radius:999px;
+      background: rgba(18,18,30,.65);
+      box-shadow: 0 0 0 6px rgba(18,18,30,.08);
+    }
+
+    h1{
+      margin: 14px 0 8px;
+      font-size: clamp(28px, 4.2vw, 44px);
+      letter-spacing: -0.8px;
+      line-height: 1.06;
+    }
+    .subtitle{
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.45;
+      max-width: 60ch;
+    }
+
+    .ctaRow{
+      display:flex; gap: 10px; flex-wrap: wrap;
+      margin-top: 16px; align-items:center;
+    }
+
+    .btn{
+      appearance:none;
+      border:1px solid rgba(40,30,70,.16);
+      border-radius: 16px;
+      padding: 11px 14px;
+      background: rgba(255,255,255,.62);
+      color: rgba(12,12,22,.92);
+      font-weight: 700;
+      cursor:pointer;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+      display:inline-flex; align-items:center; gap:10px;
+      user-select:none;
+    }
+    .btn:hover{ transform: translateY(-1px); background: rgba(255,255,255,.78); border-color: rgba(40,30,70,.22); }
+    .btn:active{ transform: translateY(0px); }
+    .btn.primary{ background: linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.66)); }
+    .btn[disabled]{ opacity:.55; cursor:not-allowed; transform:none; }
+
+    .hint{ margin-top: 10px; color: var(--muted2); font-size: 12px; }
+
+    .stat{
+      padding: 14px 14px;
+      border-radius: var(--r);
+      border:1px solid rgba(40,30,70,.14);
+      background: rgba(255,255,255,.62);
+    }
+    .stat .k{ font-size: 12px; color: var(--muted2); margin-bottom: 6px; }
+    .stat .v{ font-size: 18px; letter-spacing: -.2px; }
+
+    section{ margin-top: 16px; }
+    .grid{ display:grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media (max-width: 920px){ .grid{ grid-template-columns: 1fr; } }
+
+    .sectionTitle{
+      margin: 0 0 10px;
+      font-size: 18px;
+      letter-spacing: -.2px;
+      color: rgba(12,12,22,.92);
+    }
+
+    .letter{ padding: 18px; }
+    .letter p{ margin: 10px 0; color: var(--muted); line-height: 1.6; }
+    .quote{
+      margin-top: 12px;
+      padding: 14px 14px;
+      border-radius: 18px;
+      border:1px solid rgba(40,30,70,.14);
+      background: rgba(255,255,255,.62);
+      color: rgba(12,12,22,.88);
+      line-height: 1.55;
+    }
+
+    .timeline{ padding: 16px; }
+    .titem{
+      display:grid; grid-template-columns: 110px 1fr;
+      gap: 12px;
+      padding: 12px 10px;
+      border-radius: 16px;
+      border:1px solid rgba(40,30,70,.12);
+      background: rgba(255,255,255,.62);
+      margin-bottom: 10px;
+    }
+    .titem .date{ color: var(--muted2); font-size: 12px; padding-top: 4px; }
+    .titem .text{ color: rgba(12,12,22,.92); line-height: 1.45; }
+    @media (max-width: 520px){ .titem{ grid-template-columns: 1fr; } }
+
+    /* Highlights */
+    .highlights{ padding: 16px; }
+    .hlGrid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    @media (max-width: 920px){ .hlGrid{ grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 520px){ .hlGrid{ grid-template-columns: 1fr; } }
+
+    .hl{
+      border-radius: 20px;
+      border:1px solid rgba(40,30,70,.12);
+      background: rgba(255,255,255,.55);
+      overflow:hidden;
+      cursor:pointer;
+      transition: transform .12s ease;
+      min-height: 220px;
+      position:relative;
+    }
+    .hl:hover{ transform: translateY(-2px); }
+    .hl img{
+      width:100%; height: 160px;
+      object-fit: cover;
+      display:block;
+      filter: saturate(1.02);
+    }
+    .hlInfo{ padding: 12px 12px 14px; }
+    .hlTitle{ font-weight: 800; letter-spacing: -.2px; margin: 0 0 6px; }
+    .hlSub{ color: var(--muted); font-size: 13px; margin:0; line-height:1.35; }
+    .hlTag{
+      position:absolute;
+      top: 10px; left: 10px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.75);
+      border:1px solid rgba(40,30,70,.12);
+      font-size: 12px;
+      color: rgba(12,12,22,.82);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .video{ padding: 16px; }
+    video{
+      width:100%;
+      border-radius: 18px;
+      border: 1px solid rgba(40,30,70,.12);
+      background: rgba(255,255,255,.62);
+      overflow:hidden;
+    }
+
+    footer{
+      padding: 22px 0 6px;
+      text-align:center;
+      color: var(--muted2);
+      font-size: 12px;
+    }
+
+    /* ========= PASSWORD GATE ========= */
+    .gate{
+      position:fixed; inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding: 18px;
+      background:
+        radial-gradient(1000px 720px at 18% 0%, rgba(173,116,255,.22), transparent 60%),
+        radial-gradient(900px 720px at 92% 10%, rgba(255,99,148,.18), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.72));
+      z-index: 100;
+    }
+    .gateCard{
+      width:min(520px, 100%);
+      border-radius: 26px;
+      border:1px solid rgba(40,30,70,.14);
+      background: linear-gradient(180deg, rgba(255,255,255,.86), rgba(255,255,255,.62));
+      box-shadow: 0 22px 90px rgba(25,25,45,.18);
+      padding: 18px;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      text-align:center;
+    }
+    .gateTitle{ font-size: 22px; letter-spacing:-.3px; margin: 8px 0 6px; }
+    .gateSub{ color: var(--muted); margin:0 0 14px; line-height:1.4; }
+    .gateRow{ display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
+    .input{
+      padding: 12px 14px;
+      border-radius: 16px;
+      border:1px solid rgba(40,30,70,.18);
+      background: rgba(255,255,255,.86);
+      min-width: 240px;
+      font-size: 18px;
+      outline:none;
+      text-align:center;
+      letter-spacing: 2px;
+    }
+    .error{ margin-top: 10px; color: rgba(180,40,70,.90); font-size: 13px; display:none; }
+    .hidden{ display:none !important; }
+
+    /* ========= STORIES ========= */
+    .stories{
+      position:fixed; inset:0;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding: 12px;
+      background: rgba(0,0,0,.58);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      z-index: 90;
+      user-select:none;
+      -webkit-user-select:none;
+    }
+    .stories.open{ display:flex; }
+
+    .storyFrame{
+      width:min(420px, 100%);
+      height:min(740px, 92vh);
+      border-radius: 26px;
+      overflow:hidden;
+      position:relative;
+      border:1px solid rgba(255,255,255,.18);
+      background: rgba(0,0,0,.25);
+      box-shadow: 0 30px 110px rgba(0,0,0,.45);
+    }
+
+    .storyImg{
+      position:absolute; inset:0;
+      width:100%; height:100%;
+      object-fit: cover;
+      transform: scale(1.02);
+    }
+
+    .storyShade{
+      position:absolute; inset:0;
+      background:
+        linear-gradient(180deg, rgba(0,0,0,.55), transparent 32%),
+        linear-gradient(0deg, rgba(0,0,0,.60), transparent 34%);
+      pointer-events:none;
+    }
+
+    .storyTop{ z-index: 7; position:absolute; left:0; right:0; top:0; padding: 10px 10px 0; }
+    .bars{
+      display:flex; gap:6px;
+      padding: 6px 6px 8px;
+    }
+    .bar{
+      flex:1;
+      height: 3px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.28);
+      overflow:hidden;
+    }
+    .bar > i{
+      display:block;
+      height:100%;
+      width:0%;
+      background: rgba(255,255,255,.95);
+    }
+
+    .storyHeader{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding: 4px 10px 10px;
+      color: rgba(255,255,255,.92);
+      font-size: 13px;
+    }
+    .storyHeader .left{
+      display:flex; align-items:center; gap:10px;
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+    }
+    .pill{
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(0,0,0,.35);
+      border:1px solid rgba(255,255,255,.18);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    .xbtn{
+      border:none;
+      background: rgba(0,0,0,.35);
+      border:1px solid rgba(255,255,255,.18);
+      color: rgba(255,255,255,.92);
+      border-radius: 12px;
+      padding: 7px 10px;
+      cursor:pointer;
+    }
+
+    .storyBottom{
+      position:absolute; left:0; right:0; bottom:0;
+      padding: 12px 12px 14px;
+      z-index:2;
+    }
+    .storyCap{
+      color: rgba(255,255,255,.94);
+      background: rgba(0,0,0,.35);
+      border:1px solid rgba(255,255,255,.18);
+      border-radius: 18px;
+      padding: 10px 12px;
+      line-height: 1.35;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      font-size: 14px;
+    }
+
+    /* Стрелки в сторис */
+    .arrow{
+      position:absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.18);
+      background: rgba(0,0,0,.35);
+      color: rgba(255,255,255,.92);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+      z-index: 8;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      font-size: 28px;
+      line-height: 1;
+      padding: 0;
+    }
+    .arrow:active{ transform: translateY(-50%) scale(.98); }
+    .arrow.left{ left: 10px; }
+    .arrow.right{ right: 10px; }
+  </style>
+</head>
+
+<body>
+  <!-- PASSWORD GATE -->
+  <div class="gate" id="gate">
+    <div class="gateCard">
+      <div style="font-size:28px;">🔒</div>
+      <div class="gateTitle">Только для тебя</div>
+      <p class="gateSub">Введи код, чтобы открыть ❤️</p>
+
+      <div class="gateRow">
+        <input class="input" id="passInput" placeholder="Код" inputmode="numeric" autocomplete="off" />
+        <button class="btn primary" id="enterBtn" type="button">Открыть</button>
+      </div>
+
+      <div class="error" id="passErr">Не тот код 😌</div>
+    </div>
+  </div>
+
+  <div class="wrap" id="content" style="filter: blur(6px); pointer-events:none;">
+    <header>
+      <div class="hero">
+        <div class="card heroMain">
+          <div class="badge"><span class="dot"></span><span>14 февраля • только для тебя</span></div>
+          <h1>Наша история ❤️</h1>
+          <p class="subtitle">Я собрал здесь наши моменты — чтобы ты улыбалась, даже если мы далеко.</p>
+
+          <div class="ctaRow">
+            <button class="btn primary" id="playBtn" type="button">▶ Включить музыку</button>
+            <button class="btn" id="pauseBtn" type="button" disabled>⏸ Пауза</button>
+            <button class="btn" id="scrollHighlightsBtn" type="button">💞 К моментам</button>
+            <button class="btn" id="scrollVideoBtn" type="button">🎬 К видео</button>
+          </div>
+
+          <div class="hint">Музыка на телефоне запускается только после нажатия 🙂</div>
+
+          <audio id="bgAudio" preload="auto" loop>
+            <source src="assets/music.mp3" type="audio/mpeg">
+          </audio>
+        </div>
+
+        <div class="card heroSide">
+          <div class="stat">
+            <div class="k">Сегодня</div>
+            <div class="v" id="today"></div>
+          </div>
+          <div class="stat">
+            <div class="k">Моментов</div>
+            <div class="v"><span id="countAlbums">0</span> блоков</div>
+          </div>
+          <div class="stat">
+            <div class="k">Маленькое обещание</div>
+            <div class="v">Быть рядом. Всегда.</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="grid">
+      <div class="card letter">
+        <div class="sectionTitle">Письмо для тебя</div>
+        <p>Ты — мой любимый человек. Мне нравится всё: как ты смеёшься, как ты смотришь, как ты рядом.</p>
+        <p>Я хочу, чтобы ты всегда чувствовала: ты — самый тёплый кусочек счастья в моей жизни.</p>
+        <div class="quote">«Я выбираю тебя. Снова и снова.»</div>
+      </div>
+
+      <div class="card timeline">
+        <div class="sectionTitle">Немного нашей магии</div>
+        <div id="timeline"></div>
+      </div>
+    </section>
+
+    <section id="highlightsSection" class="card highlights">
+      <div class="sectionTitle">Наши моменты 💞</div>
+      <div class="hlGrid" id="hlGrid"></div>
+      <div class="hint">Сторис переключаются только кнопками ← →. Удерживай палец/мышь — пауза 😉</div>
+    </section>
+
+    <section id="videoSection" class="card video">
+      <div class="sectionTitle">Видео</div>
+      <video id="loveVideo" controls playsinline preload="metadata">
+        <source src="assets/video.mp4" type="video/mp4">
+      </video>
+      <div class="hint">Если включить видео — музыка ставится на паузу и вернётся после паузы/закрытия.</div>
+    </section>
+
+    <footer>С любовью. Всегда рядом ✨</footer>
+  </div>
+
+  <!-- STORIES -->
+  <div class="stories" id="stories">
+    <div class="storyFrame" id="storyFrame">
+      <img class="storyImg" id="storyImg" alt="">
+      <div class="storyShade"></div>
+
+      <div class="storyTop">
+        <div class="bars" id="bars"></div>
+        <div class="storyHeader">
+          <div class="left">
+            <div class="pill" id="storyCounter">1 / 6</div>
+            <div class="pill" id="storyTitle">Моменты</div>
+          </div>
+          <button class="xbtn" id="closeStories" type="button">✕</button>
+        </div>
+      </div>
+
+      <div class="storyBottom">
+        <div class="storyCap" id="storyCap"></div>
+      </div>
+
+      <button class="arrow left" id="arrowPrev" type="button" aria-label="Назад">‹</button>
+      <button class="arrow right" id="arrowNext" type="button" aria-label="Вперёд">›</button>
+    </div>
+  </div>
+
+  <script>
+    const PASSCODE = "4663";
+    const ALBUMS = [
+      { title:"Дурачимся 😂", subtitle:"Самые живые и настоящие мы", folder:"durachimsy", items:[
+        { file:"2A363086-7D3A-4688-BAF8-5654866C44E4_1_105_c.jpeg", caption:"" },
+        { file:"5F6646BD-4056-4530-A78D-A12ECF7E4BC8_1_105_c.jpeg", caption:"" },
+        { file:"52D6F4F7-A3AA-477F-8DFA-3129DBFA23F0_1_105_c.jpeg", caption:"" },
+        { file:"228FD395-8FF6-4BD7-9B6E-42C1B60E98FE_1_105_c.jpeg", caption:"" },
+        { file:"967BA12B-7005-46E5-980F-788765B13AEA_1_105_c.jpeg", caption:"" },
+        { file:"1564F6CE-F77D-448D-9CD7-760DDDCDEEA3_1_105_c.jpeg", caption:"" },
+        { file:"9447DB06-03A8-43D2-A84A-A1E7024D0AEC_1_105_c.jpeg", caption:"" },
+        { file:"B964AFFA-3679-4E63-A58A-7E1324D24213_1_102_o.jpeg", caption:"" },
+        { file:"C6BF6EAE-8EB1-4C11-BC59-D6B445044085_1_105_c.jpeg", caption:"" }
+      ]},
+      { title:"Красотка моя ✨", subtitle:"Каждый раз влюбляюсь заново", folder:"krasota moya", items:[
+        { file:"2AD92F4B-B109-4A20-A759-6F4ED9F14B65_1_105_c.jpeg", caption:"" },
+        { file:"7F91454B-FC23-4F5E-9936-4EBB56A76C19_1_105_c.jpeg", caption:"" },
+        { file:"1875D4B4-43DC-408E-8A53-A3D30475B5D8_1_105_c.jpeg", caption:"" },
+        { file:"5582936C-B0E1-4A29-9992-F5A86EAAEE83_1_105_c.jpeg", caption:"" },
+        { file:"AAE7C74D-5D05-4334-A65C-8862326453F7_1_105_c.jpeg", caption:"" },
+        { file:"C4522B29-8E9B-4B0E-A673-5CB3CCB9B0FA_1_105_c.jpeg", caption:"" }
+      ]},
+      { title:"Наша +1 ❤️", subtitle:"Когда нас стало больше", folder:"nasha plus odin", items:[
+        { file:"34D106CA-EFA0-46F7-B40C-DDF1DE674802_1_105_c.jpeg", caption:"" },
+        { file:"244AA3F5-B6B3-429F-BF08-E3F643C2FBFF_1_105_c.jpeg", caption:"" },
+        { file:"627C1F84-9D81-4800-BEAD-1B77044F0910_1_105_c.jpeg", caption:"" },
+        { file:"9937A497-2FA8-4CDE-844F-D10901EFAD39_1_105_c.jpeg", caption:"" },
+        { file:"B23999B0-3290-4DDE-A48F-7AA0FF591931_1_105_c.jpeg", caption:"" },
+        { file:"D65A29E0-4EBE-4B65-AA3B-D436E8378071_1_105_c.jpeg", caption:"" }
+      ]},
+      { title:"Обнимашки 🤍", subtitle:"Когда мир становится тише", folder:"obnimashki", items:[
+        { file:"0C8564FB-0C2B-4AD9-8C33-747D85ED2A93_1_105_c.jpeg", caption:"" },
+        { file:"2A106463-8DC3-4AE5-8B02-8357ACE5D21C_1_105_c.jpeg", caption:"" },
+        { file:"3B8435D7-94E1-45E3-8B33-71D7DD6B1D87_1_105_c.jpeg", caption:"" },
+        { file:"024EE238-6A2C-4C2C-8FB1-54470B89CBD4.jpeg", caption:"" },
+        { file:"907DCFB5-BEBB-4B80-A55E-F802A97EF2A0_1_105_c.jpeg", caption:"" },
+        { file:"8192051E-D9EF-42B2-BDB6-1FBFE6C576A2_1_105_c.jpeg", caption:"" }
+      ]},
+      { title:"Отличные поездки 🚗", subtitle:"Туда, где мы вместе", folder:"poizdki", items:[
+        { file:"3D864D64-B159-4A9E-B00C-E8B95FD70FF8_1_105_c.jpeg", caption:"" },
+        { file:"5C3AE85F-8DC1-46ED-8B8F-05C5379A16BD_1_105_c.jpeg", caption:"" },
+        { file:"8C33B5AB-4316-4882-8DAB-2140698EE094_1_105_c.jpeg", caption:"" },
+        { file:"A4319DF5-7709-4B7D-9E03-0374F512AD65_1_105_c.jpeg", caption:"" },
+        { file:"C0DCF0C1-9A54-4A77-AD3B-21DE497EC5A7_1_105_c.jpeg", caption:"" },
+        { file:"D38AC2F6-9CC7-4945-8D68-5E0B6094FB43_1_105_c.jpeg", caption:"" },
+        { file:"FCB52917-0C22-42CE-8764-24AADEAF26EE_1_105_c.jpeg", caption:"" }
+      ]},
+      { title:"Вкусняшка моя 😋", subtitle:"Все наши вкусные радости", folder:"vkusnyahka", items:[
+        { file:"2A123E13-164F-4B22-9B0A-CCF6EBD2891D_1_105_c.jpeg", caption:"" },
+        { file:"6A140650-3DD8-4A65-95A9-8B614DAF6396_1_105_c.jpeg", caption:"" },
+        { file:"55930141-4539-4291-BE62-7A2044257F9A_1_105_c.jpeg", caption:"" },
+        { file:"A09900AC-9779-46ED-8488-67D83F58D767_1_105_c.jpeg", caption:"" },
+        { file:"B2F41DA0-CCE5-4ABA-83FD-A34D840FD02A_1_105_c.jpeg", caption:"" },
+        { file:"CEBB6E58-EAF4-464A-894F-83F89BF68CB1_1_105_c.jpeg", caption:"" }
+      ]},
+    ];
+
+const TIMELINE = [
+      { date: "Наш день", text: "С которого всё стало «по-настоящему»." },
+      { date: "Первое путешествие", text: "Когда мир стал ярче, потому что рядом ты." },
+      { date: "Наша традиция", text: "Наши маленькие «только наши» вещи." },
+      { date: "Сегодня", text: "Я выбираю тебя. Снова и снова." },
+    ];
+
+    const $ = (id) => document.getElementById(id);
+    const enc = (p) => encodeURI(p);
+
+function photoURL(folder, file){
+  return enc(`assets/${folder}/${file}`);
+}
+function fallbackPhotoURL(folder, file){
+  return enc(`${folder}/${file}`);
+}
+
+
+    // ===== Password gate (always) =====
+    const gate = $("gate");
+    const content = $("content");
+    const passInput = $("passInput");
+    const enterBtn = $("enterBtn");
+    const passErr = $("passErr");
+
+    function unlock(){
+      passErr.style.display = "none";
+      gate.classList.add("hidden");
+      content.style.filter = "none";
+      content.style.pointerEvents = "auto";
+      document.body.style.overflow = "";
+    }
+    function lock(){
+      gate.classList.remove("hidden");
+      gate.style.display = "flex";
+      content.style.filter = "blur(6px)";
+      content.style.pointerEvents = "none";
+      document.body.style.overflow = "hidden";
+    }
+    function tryPass(){
+      const v = (passInput.value || "").trim();
+      if(v === PASSCODE) unlock();
+      else passErr.style.display = "block";
+    }
+    lock();
+    enterBtn.addEventListener("click", (e)=>{ e.preventDefault(); tryPass(); });
+    passInput.addEventListener("keydown", (e)=>{ if(e.key === "Enter") tryPass(); });
+    passInput.addEventListener("input", ()=>{ if((passInput.value||"").trim().length >= 4) tryPass(); });
+
+    // ===== Render date / timeline / highlights =====
+    const now = new Date();
+    const fmt = new Intl.DateTimeFormat("ru-RU", { day:"2-digit", month:"long", year:"numeric" });
+    $("today").textContent = "14 февраля";
+    $("countAlbums").textContent = ALBUMS.length;
+
+    const timeline = $("timeline");
+    TIMELINE.forEach(item => {
+      const el = document.createElement("div");
+      el.className = "titem";
+      el.innerHTML = `<div class="date">${item.date}</div><div class="text">${item.text}</div>`;
+      timeline.appendChild(el);
+    });
+
+    const hlGrid = $("hlGrid");
+    ALBUMS.forEach((a, idx) => {
+      const cover = a.items[0]?.file || "";
+      const el = document.createElement("div");
+      el.className = "hl";
+      el.innerHTML = `
+        <div class="hlTag">${a.items.length} фото</div>
+        <img src="${photoURL(a.folder, cover)}" alt="">
+        <div class="hlInfo">
+          <h3 class="hlTitle">${a.title}</h3>
+          <p class="hlSub">${a.subtitle || ""}</p>
+        </div>
+      `;
+      const coverImg = el.querySelector("img");
+      coverImg.addEventListener("error", () => { coverImg.src = fallbackPhotoURL(a.folder, cover); }, { once:true });
+
+      el.addEventListener("click", () => openStories(idx, 0));
+      hlGrid.appendChild(el);
+    });
+
+    $("scrollHighlightsBtn").addEventListener("click", () => {
+      $("highlightsSection").scrollIntoView({ behavior:"smooth", block:"start" });
+    });
+    $("scrollVideoBtn").addEventListener("click", () => {
+      $("videoSection").scrollIntoView({ behavior:"smooth", block:"start" });
+    });
+
+    // ===== Music + Video interaction =====
+    const audio = $("bgAudio");
+    const playBtn = $("playBtn");
+    const pauseBtn = $("pauseBtn");
+    const video = $("loveVideo");
+
+    let bgWasPlayingBeforeVideo = false;
+
+    async function safePlayAudio(){
+      try{
+        await audio.play();
+        playBtn.disabled = true;
+        pauseBtn.disabled = false;
+      }catch(e){}
+    }
+    function pauseAudio(){
+      audio.pause();
+      playBtn.disabled = false;
+      pauseBtn.disabled = true;
+    }
+
+    playBtn.addEventListener("click", async () => { await safePlayAudio(); });
+    pauseBtn.addEventListener("click", () => { pauseAudio(); });
+
+    function handleVideoStart(){
+      bgWasPlayingBeforeVideo = !audio.paused;
+      if(bgWasPlayingBeforeVideo) pauseAudio();
+    }
+    function handleVideoStop(){
+      if(bgWasPlayingBeforeVideo) safePlayAudio();
+      bgWasPlayingBeforeVideo = false;
+    }
+    video.addEventListener("play", handleVideoStart);
+    video.addEventListener("pause", handleVideoStop);
+    video.addEventListener("ended", handleVideoStop);
+
+    document.addEventListener("fullscreenchange", () => {
+      if(document.fullscreenElement !== video){
+        if(video.paused || video.ended) handleVideoStop();
+      }
+    });
+
+    // ===== Stories (only arrows), hold to pause, auto progress =====
+    const stories = $("stories");
+    const storyImg = $("storyImg");
+    const storyCap = $("storyCap");
+    const storyCounter = $("storyCounter");
+    const storyTitle = $("storyTitle");
+    const bars = $("bars");
+    const closeStoriesBtn = $("closeStories");
+    const frame = $("storyFrame");
+    const arrowPrev = $("arrowPrev");
+    const arrowNext = $("arrowNext");
+
+    let albumIndex = 0;
+    let photoIndex = 0;
+
+    let timer = null;
+    let storyStartAt = 0;
+    let elapsedBase = 0;
+
+    const STORY_MS = 5200;
+
+    function buildBars(n){
+      bars.innerHTML = "";
+      for(let i=0;i<n;i++){
+        const b = document.createElement("div");
+        b.className = "bar";
+        b.innerHTML = "<i></i>";
+        bars.appendChild(b);
+      }
+    }
+    function setBarProgress(idx, pct){
+      const all = bars.querySelectorAll(".bar > i");
+      all.forEach((el, i) => {
+        if(i < idx) el.style.width = "100%";
+        else if(i === idx) el.style.width = pct + "%";
+        else el.style.width = "0%";
+      });
+    }
+    function currentAlbum(){ return ALBUMS[albumIndex]; }
+
+    function renderStory(){
+      const a = currentAlbum();
+      const item = a.items[photoIndex];
+      storyTitle.textContent = a.title;
+      storyImg.src = photoURL(a.folder, item.file);
+      storyImg.onerror = () => { storyImg.onerror = null; storyImg.src = fallbackPhotoURL(a.folder, item.file); };
+      storyCap.textContent = item.caption || "";
+      storyCounter.textContent = `${photoIndex + 1} / ${a.items.length}`;
+      setBarProgress(photoIndex, 0);
+    }
+
+    function stopAuto(){
+      if(timer){ clearInterval(timer); timer = null; }
+    }
+    function startAuto(resetElapsed=true){
+      stopAuto();
+      if(resetElapsed) elapsedBase = 0;
+      storyStartAt = Date.now();
+      timer = setInterval(() => {
+        const elapsed = elapsedBase + (Date.now() - storyStartAt);
+        const pct = Math.min(100, (elapsed / STORY_MS) * 100);
+        setBarProgress(photoIndex, pct);
+        if(pct >= 100) nextStory();
+      }, 35);
+    }
+    function pauseAuto(){
+      if(!timer) return;
+      elapsedBase += (Date.now() - storyStartAt);
+      stopAuto();
+    }
+    function resumeAuto(){
+      if(timer) return;
+      storyStartAt = Date.now();
+      timer = setInterval(() => {
+        const elapsed = elapsedBase + (Date.now() - storyStartAt);
+        const pct = Math.min(100, (elapsed / STORY_MS) * 100);
+        setBarProgress(photoIndex, pct);
+        if(pct >= 100) nextStory();
+      }, 35);
+    }
+
+    function openStories(aIdx=0, pIdx=0){
+      albumIndex = aIdx;
+      photoIndex = pIdx;
+      buildBars(currentAlbum().items.length);
+      renderStory();
+      stories.classList.add("open");
+      document.body.style.overflow = "hidden";
+      startAuto(true);
+    }
+    function closeStories(){
+      stopAuto();
+      elapsedBase = 0;
+      stories.classList.remove("open");
+      document.body.style.overflow = "";
+    }
+    function prevStory(){
+      stopAuto();
+      elapsedBase = 0;
+      if(photoIndex > 0){
+        photoIndex--;
+        renderStory();
+        startAuto(true);
+      } else {
+        closeStories();
+      }
+    }
+    function nextStory(){
+      stopAuto();
+      elapsedBase = 0;
+      if(photoIndex < currentAlbum().items.length - 1){
+        photoIndex++;
+        renderStory();
+        startAuto(true);
+      } else {
+        closeStories();
+      }
+    }
+
+    closeStoriesBtn.addEventListener("click", (e)=>{ e.preventDefault(); e.stopPropagation(); closeStories(); });
+    stories.addEventListener("click", (e)=>{ if(e.target === stories) closeStories(); });
+    frame.addEventListener("click", (e)=>{ e.stopPropagation(); });
+
+    arrowPrev.addEventListener("click", (e)=>{ e.preventDefault(); e.stopPropagation(); prevStory(); });
+    arrowNext.addEventListener("click", (e)=>{ e.preventDefault(); e.stopPropagation(); nextStory(); });
+
+    // Hold to pause (mouse + touch). Touch: prevent ghost clicks.
+    let suppressNextClickUntil = 0;
+    const isSuppressedClick = () => Date.now() < suppressNextClickUntil;
+
+    frame.addEventListener("mousedown", ()=>{ if(stories.classList.contains("open")) pauseAuto(); });
+    window.addEventListener("mouseup", ()=>{ if(stories.classList.contains("open")) resumeAuto(); });
+
+    frame.addEventListener("touchstart", (e)=>{
+      e.preventDefault();
+      suppressNextClickUntil = Date.now() + 450;
+      if(stories.classList.contains("open")) pauseAuto();
+    }, { passive:false });
+
+    frame.addEventListener("touchend", (e)=>{
+      e.preventDefault();
+      suppressNextClickUntil = Date.now() + 450;
+      if(stories.classList.contains("open")) resumeAuto();
+    }, { passive:false });
+
+    window.addEventListener("click", (e)=>{
+      // safety: don't let delayed click do anything weird
+      if(isSuppressedClick()) e.stopPropagation();
+    }, true);
+
+    window.addEventListener("keydown", (e)=>{
+      if(!stories.classList.contains("open")) return;
+      if(e.key === "Escape") closeStories();
+      if(e.key === "ArrowLeft") prevStory();
+      if(e.key === "ArrowRight") nextStory();
+    });
+  </script>
+</body>
+</html>
