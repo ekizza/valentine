@@ -191,7 +191,9 @@
     .hl:hover{ transform: translateY(-2px); }
     .hl img{
       width:100%; height: 160px;
-      object-fit: cover;
+      object-fit: contain;
+      object-position: center center;
+      background: #000;
       display:block;
       filter: saturate(1.02);
     }
@@ -286,7 +288,8 @@
 
     .storyFrame{
       width:min(420px, 100%);
-      height:min(740px, 92vh);
+      height: min(740px, 100dvh);
+      max-height: 100dvh;
       border-radius: 26px;
       overflow:hidden;
       position:relative;
@@ -298,7 +301,9 @@
     .storyImg{
       position:absolute; inset:0;
       width:100%; height:100%;
-      object-fit: cover;
+      object-fit: contain;
+      object-position: center center;
+      background: #000;
       transform: scale(1.02);
     }
 
@@ -359,6 +364,8 @@
       color: rgba(255,255,255,.92);
       border-radius: 12px;
       padding: 7px 10px;
+      margin-top: 4px;
+      margin-right: 4px;
       cursor:pointer;
     }
 
@@ -400,11 +407,40 @@
       font-size: 28px;
       line-height: 1;
       padding: 0;
-    }
+    
+      margin: 0 6px;
+}
     .arrow:active{ transform: translateY(-50%) scale(.98); }
     .arrow.left{ left: 10px; }
     .arrow.right{ right: 10px; }
-  </style>
+  
+/* ===== Instagram-style vertical video ===== */
+
+.videoReelSection{
+  margin-top: 40px;
+  display:flex;
+  justify-content:center;
+}
+
+.videoReelWrapper{
+  width: 100%;
+  max-width: 420px;
+  aspect-ratio: 9 / 16;
+  background: #000;
+  border-radius: 28px;
+  overflow:hidden;
+  box-shadow: 0 40px 120px rgba(0,0,0,.35);
+  position:relative;
+}
+
+.videoReelWrapper video{
+  width:100%;
+  height:100%;
+  object-fit: cover;
+  background:#000;
+}
+
+</style>
 </head>
 
 <body>
@@ -483,13 +519,15 @@
       <div class="hint">Сторис переключаются только кнопками ← →. Удерживай палец/мышь — пауза 😉</div>
     </section>
 
-    <section id="videoSection" class="card video">
-      <div class="sectionTitle">Видео</div>
-      <video id="loveVideo" controls playsinline preload="metadata">
-        <source src="assets/video.mp4" type="video/mp4">
-      </video>
-      <div class="hint">Если включить видео — музыка ставится на паузу и вернётся после паузы/закрытия.</div>
+    
+    <section id="videoSection" class="videoReelSection">
+      <div class="videoReelWrapper">
+        <video id="loveVideo" playsinline controls preload="metadata">
+          <source src="assets/video.mp4" type="video/mp4">
+        </video>
+      </div>
     </section>
+
 
     <footer>С любовью. Всегда рядом ✨</footer>
   </div>
